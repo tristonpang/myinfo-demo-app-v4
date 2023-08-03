@@ -66,19 +66,27 @@
 		// ---END---MAIN HANDLER---
 
 
+		var codeChallenge;
+		var codeVerifier;
 		// ---START---AUTH API---
 		function callAuthorizeApi() {
 			//Call backend server to generate code challenge 
 			$.ajax({
-				url: "/generateCodeChallenge",
+				url: "http://localhost:3002/sgps/pkce",
 				data: {},
 				type: "POST",
 				success: function (result) {
+					console.log('Code challenge result', result.result)
+
+					codeChallenge = result.result.codeChallenge;
+					codeVerifier = result.result.codeVerifier;
+					localStorage.codeVerifier = codeVerifier;
+
 					//Redirect to authorize url after generating code challenge
 					var authorizeUrl = authApiUrl + "?client_id=" + clientId +
 						"&scope=" + scope +
 						"&purpose_id=" + purpose_id +
-						"&code_challenge=" + result +
+						"&code_challenge=" + codeChallenge +
 						"&code_challenge_method=" + method +
 						"&redirect_uri=" + redirectUrl;
 
@@ -106,20 +114,21 @@
 		// ---START---CALL SERVER API - calling server side APIs (token & person) to get the person data for prefilling form
 		function callServerAPIs() {
 			var authCode = $.url(this.location.href).param('code');
-			// console.log("Auth Code:",authCode);
+			console.log("Auth Code:",authCode);
+			console.log("Code verifier:",localStorage.codeVerifier);
 			// console.log("State:",state);
 
 			// invoke AJAX call from frontend client side to your backend server side
 			$.ajax({
-				url: "/getPersonData",
-				data: {
-					authCode: authCode,
-					codeVerifier: window.sessionStorage.getItem("codeVerifier")
-				},
-				type: "POST", // post to server side
+				url: `http://localhost:3002/sgps/retrieveInfo?authCode=${authCode}&codeVerifier=${localStorage.codeVerifier}`,
+				// data: {
+				// 	authCode: authCode,
+				// 	codeVerifier: window.sessionStorage.getItem("codeVerifier")
+				// },
+				type: "GET", // post to server side
 				success: function (result) {
-					// console.log("result",result);
-					prefillForm(result);
+					console.log("result",result.result);
+					// prefillForm(result);
 				},
 				error: function (result) {
 					alert("ERROR:" + JSON.stringify(result.responseJSON.error));

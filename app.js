@@ -148,6 +148,7 @@ app.post("/generateCodeChallenge", async function (req, res, next) {
     // create a session and store code_challenge and code_verifier pair
     let sessionId = crypto.randomBytes(16).toString("hex");
     sessionIdCache[sessionId] = pkceCodePair.codeVerifier;
+    console.log("Code verifier:", pkceCodePair.codeVerifier);
 
     //establish a frontend session with browser to retrieve back code_verifier
     res.cookie("sid", sessionId);

@@ -9,7 +9,7 @@
 
 let ENVIRONMENT = process.argv[2];
 let urlEnvironmentPrefix = ENVIRONMENT == "prod" ? "" : `${ENVIRONMENT}.`;
-
+console.log(ENVIRONMENT)
 /**
  * Set the following demo app configurations for the demo app to run
  * 
@@ -22,14 +22,15 @@ let urlEnvironmentPrefix = ENVIRONMENT == "prod" ? "" : `${ENVIRONMENT}.`;
  * MYINFO_API_AUTHORIZE: The URL for Authorize API
  */
 let APP_CONFIG = {
-  // DEMO_APP_CLIENT_ID: "STG2-MYINFO-DEMO-APP", 
-  DEMO_APP_CLIENT_ID: "STG2-MYINFO-SELF-TEST", 
+  DEMO_APP_CLIENT_ID: "STG-201617258W-BLUESG-ACCTSIGNUP", 
+  // DEMO_APP_CLIENT_ID: "STG2-MYINFO-SELF-TEST", 
   DEMO_APP_SUBENTITY_ID: "", //only for platform apps
   DEMO_APP_CLIENT_PRIVATE_SIGNING_KEY: "./cert/your-sample-app-signing-private-key.pem",
   DEMO_APP_CLIENT_PRIVATE_ENCRYPTION_KEYS: "./cert/encryption-private-keys/",
   DEMO_APP_CALLBACK_URL: "http://localhost:3001/callback",
-  DEMO_APP_PURPOSE_ID: "demonstration",
-  DEMO_APP_SCOPES : "uinfin name sex race nationality dob email mobileno regadd housingtype hdbtype marital edulevel noa-basic ownerprivate cpfcontributions cpfbalances",
+  DEMO_APP_PURPOSE_ID: "078e9c2e",
+  // DEMO_APP_PURPOSE_ID: "demonstration",
+  DEMO_APP_SCOPES : "uinfin name sex race dob passexpirydate mobileno regadd residentialstatus drivinglicence.suspension.enddate drivinglicence.disqualification.enddate drivinglicence.revocation.enddate drivinglicence.qdl.validity drivinglicence.qdl.expirydate drivinglicence.photocardserialno drivinglicence.qdl.classes",
   MYINFO_API_AUTHORIZE: `https://${urlEnvironmentPrefix}api.myinfo.gov.sg/com/v4/authorize`
 };
 
