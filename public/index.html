@@ -120,12 +120,15 @@
 
 			// invoke AJAX call from frontend client side to your backend server side
 			$.ajax({
-				url: `http://localhost:3002/sgps/retrieveInfo?authCode=${authCode}&codeVerifier=${localStorage.codeVerifier}`,
+				url: `http://localhost:3002/sgps/retrieveInfo?authCode=${authCode}&codeVerifier=${localStorage.codeVerifier}&subscriptionId=68a09700-fa4f-44f3-af71-63e3895303b4`,
 				// data: {
 				// 	authCode: authCode,
 				// 	codeVerifier: window.sessionStorage.getItem("codeVerifier")
 				// },
 				type: "GET", // post to server side
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxYWYwNTBjZS1lYjFmLTQyYzEtOTlhOC1jZTBlOGExNjBjYzciLCJzZXNzaW9uSWQiOiI5NTU4YmZlNC1mMjNiLTQwYTYtYjQwYy1lYWZmZThmNzViZWQiLCJzY29wZSI6W10sImlhdCI6MTY5MjU4MTk3NSwiZXhwIjoxMDE2OTI1ODE5NzQsImF1ZCI6WyJibHVlc2ciXSwiaXNzIjoiY3VzdG9tZXItYXV0aCIsInN1YiI6Ijk1NThiZmU0LWYyM2ItNDBhNi1iNDBjLWVhZmZlOGY3NWJlZCJ9.aM41tL83pofrzi-2S9LT1wpoKtmOZO2-4WDYv7a749s`)
+				},
 				success: function (result) {
 					console.log("result",result.result);
 					// prefillForm(result);
